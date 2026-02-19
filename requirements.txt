@@ -1,0 +1,8 @@
+fastapi==0.129.0
+uvicorn==0.40.0
+python-multipart==0.0.22
+torch==2.9.0
+torchvision==0.24.0
+mlflow==3.9.0
+scikit-learn==1.6.1
+Pillow

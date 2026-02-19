@@ -1,0 +1,23 @@
+artifact_path: /content/mlops-cats-vs-dogs/mlruns/1/models/m-915e64d99c9a471799e014440404d77e/artifacts
+flavors:
+  python_function:
+    config:
+      device: null
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pytorch
+    pickle_module_name: mlflow.pytorch.pickle_module
+    python_version: 3.12.12
+  pytorch:
+    code: null
+    model_data: data
+    pytorch_version: 2.9.0+cu128
+mlflow_version: 3.9.0
+model_id: m-915e64d99c9a471799e014440404d77e
+model_size_bytes: 25791745
+model_uuid: m-915e64d99c9a471799e014440404d77e
+prompts: null
+run_id: 42ad0a77361340ff8fd716f4adf8f958
+utc_time_created: '2026-02-19 17:42:24.221051'
