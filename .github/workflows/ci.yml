@@ -49,10 +49,33 @@ jobs:
     needs: build-test-docker
     runs-on: ubuntu-latest
 
+    permissions:
+      packages: read
+
     steps:
-      - name: Simulate Deployment
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Pull Image
+        run: docker pull ghcr.io/${{ github.repository }}/cats-dogs-api:latest
+
+      - name: Run Container
         run: |
-          echo "Pulling latest image from GHCR..."
-          echo "docker compose pull"
-          echo "docker compose up -d"
-          echo "Application successfully redeployed!"
+          docker run -d -p 8000:8000 --name test-api ghcr.io/${{ github.repository }}/cats-dogs-api:latest
+          sleep 10
+
+      - name: Smoke Test - Health Endpoint
+        run: curl --fail http://localhost:8000/health
+
+      - name: Smoke Test - Prediction Endpoint
+        run: |
+          curl --fail -X POST "http://localhost:8000/predict" \
+          -H "accept: application/json" \
+          -H "Content-Type: multipart/form-data" \
+          -F "file=@tests/assets/sample.jpg"
+
+      - name: Stop Container
+        run: docker stop test-api
